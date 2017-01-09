@@ -20,12 +20,11 @@ void LifeForm::set_avatar(const char *avatar) {
 	this->avatar = avatar;
 }
 
-void LifeForm::kill() {
-	this->alive = false;
-}
-
-void LifeForm::birth() {
-	this->alive = true;
+void LifeForm::switch_on() {
+	if(this->alive)
+		this->alive = false;
+	else
+		this->alive = true;
 }
 
 bool LifeForm::is_alive() {

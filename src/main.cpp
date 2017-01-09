@@ -9,6 +9,7 @@
 #define AVTR "*"
 
 std::vector< std::vector<LifeForm> > init_bugs(int, int);
+void randomize_life(std::vector< std::vector<LifeForm> >);
 
 int main( void ) {
 	int cols, rows;
@@ -17,6 +18,7 @@ int main( void ) {
 	getmaxyx(stdscr, cols, rows);
 
 	std::vector< std::vector<LifeForm> > bugs = init_bugs(cols, rows);
+	randomize_life(bugs);
 	mvprintw((cols/2), (rows/2), "%d x %d", cols, rows);
 
 	refresh();
@@ -27,21 +29,27 @@ int main( void ) {
 
 std::vector< std::vector<LifeForm> > init_bugs(int cols, int rows) {
 	std::vector< std::vector<LifeForm> > bugs;
-	std::srand(std::time(0));
-	int random;
 
 	for(int i = 0; i < cols; i++) {
 		std::vector<LifeForm> col;
 		for (int j = 0; j < rows; j++) {
-			random = (std::rand()%200) + 1;
 			LifeForm bug(i, j, AVTR);
 			col.push_back(bug);
-
-			if(bug.is_alive())
-				mvprintw(bug.posx, bug.posy, bug.avatar);
 		}
 		bugs.push_back(col);
 	}
 
 	return bugs;
+}
+
+void randomize_life(std::vector< std::vector<LifeForm> > bugs) {
+	std::srand(std::time(0));
+	for(auto bug_row : bugs) {
+		for(auto bug : bug_row) {
+			if(rand()%200 > rand()%200){
+				bug.birth();
+				mvprintw(bug.posx, bug.posy, bug.avatar);
+			}
+		}
+	}
 }
