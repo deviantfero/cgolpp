@@ -2,7 +2,7 @@ CC := g++ # This is the main compiler
 # CC := clang --analyze # and comment out the linker last line for sanity
 SRCDIR   := src
 BUILDDIR := build
-TARGET   := bin/runner
+TARGET   := bin/run
 
 SRCEXT  := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
@@ -13,6 +13,7 @@ LIB := -lncurses
 INC := #-I include
 
 $(TARGET): $(OBJECTS)
+	@mkdir bin
 	@echo " Linking..."
 	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
 
